@@ -1,5 +1,6 @@
 package com.example.pong_android.Classes;
 
+import android.media.SoundPool;
 import android.view.SurfaceHolder;
 
 import com.example.pong_android.Figuras.Ball;
@@ -10,11 +11,12 @@ public class BallThread extends Thread{
     private Boolean stop=true;
     private Ball ball;
     private  MovePlayer move;
-    private  Paddle p1;
-    public BallThread(Ball ball, MovePlayer move, Paddle p1){
+    private  Paddle p1, p2;
+    public BallThread(Ball ball, MovePlayer move, Paddle p1, Paddle p2){
         this.ball= ball;
         this.move = move;
         this.p1 = p1;
+        this.p2 = p2;
     }
 
     public void stopBall(){
@@ -31,6 +33,7 @@ public class BallThread extends Thread{
           //MOVIMIENTO DE LA PELOTA CUANDO TOCA LOS BORDES
           if( ball.getPosX() > width){
               ball.touchBorder();
+
           }
           if(ball.getPosX() < 0){
               ball.touchBorder();
@@ -42,10 +45,13 @@ public class BallThread extends Thread{
               ball.touchBorderY();
           }
           //COLISION CON JUGADOR 1
-            if(ball.getPosX() < p1.getPosX()+p1.getWidth()){
+            if(ball.getPosX() < p1.getPosX()+50 && ball.getPosY() > p1.getPosY() && ball.getPosY() < (float)(p1.getPosY()+p1.getHeight())){
                 ball.touchBorder();
             }
             //COLISION CON JUGADOR 2
+            if(ball.getPosX() > p2.getPosX()-50 && ball.getPosY() > p2.getPosY() && ball.getPosY() < (float)(p2.getPosY()+p2.getHeight())){
+                ball.touchBorder();
+            }
 
             try {
                 sleep(20);
