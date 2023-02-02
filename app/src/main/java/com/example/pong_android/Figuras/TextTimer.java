@@ -20,10 +20,20 @@ public class TextTimer {
     }
 
     public void draw(Canvas canvas){
+        //Borde del cronometro
+        Paint stkPaint = new Paint();
+        stkPaint.setStyle(Paint.Style.STROKE);
+        stkPaint.setStrokeWidth(8);
+        stkPaint.setTextSize(120);
+        stkPaint.setColor(Color.BLACK);
+        canvas.drawText(this.txt,this.x,this.y,stkPaint);
+
+        //el cronometro
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setColor(Color.WHITE);
         p.setTextSize(120);
+
         canvas.drawText(this.txt,this.x,this.y,p);
     }
 

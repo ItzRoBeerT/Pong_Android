@@ -103,7 +103,6 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         ball.draw(canvas);
 
         contador.draw(canvas);
-
     }
 
     @Override
