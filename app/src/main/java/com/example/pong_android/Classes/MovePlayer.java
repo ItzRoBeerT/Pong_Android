@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     private Float initYP1,initYP2;
     private Boolean p1Active=false, p2Active=false;
     private Ball ball;
-    private TextTimer contador;
+    private TextTimer contador, puntuacionP1,puntuacionP2;
     private  TimerThread timerThread;
     //foto bacGround
     private  Bitmap scaled;
@@ -103,6 +104,8 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         ball.draw(canvas);
 
         contador.draw(canvas);
+        puntuacionP1.draw(canvas);
+        puntuacionP2.draw(canvas);
     }
 
     @Override
@@ -127,10 +130,6 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         drawThread.setRunning(true);
         drawThread.start();
 
-        //hilo de la pelota
-        ballThread = new BallThread(ball,this, p1,p2);
-        ballThread.start();
-
         //hilo cronometro
         timerThread = new TimerThread(contador);
         timerThread.start();
@@ -140,6 +139,15 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         int newWidth = getWidth();
         int newHeight = Math.round(background.getHeight() / scale);
         scaled = Bitmap.createScaledBitmap(background,newWidth,newHeight,true);
+
+        //pintar puntuacion p1
+        puntuacionP1 = new TextTimer("0",getWidth()/3,100);
+        //pintar puntuacion p2
+        puntuacionP2 = new TextTimer("0",(getWidth()-850),100);
+
+        //hilo de la pelota
+        ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2);
+        ballThread.start();
     }
 
     @Override
