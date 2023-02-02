@@ -41,8 +41,9 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         Float x = event.getX();
         Float y = event.getY();
+        int pointerCount = event.getPointerCount();
 
-      /*  switch (event.getAction()){
+       switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 if(p1.isTouching(x.doubleValue(), y.doubleValue())){
                     p1Active = true;
@@ -58,29 +59,31 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 return  true;
             case MotionEvent.ACTION_MOVE:
-                if(p1Active){
-                    Double des1 = (double)(x-initXP1);
-                    Double des2 = (double) (y-initYP1);
-                    p1.updateCoord(des1,des2);
-                    initXP1 = event.getX();
-                    initYP1 = event.getY();
-                    System.out.println("Moviendose j1");
-                }
-                if(p2Active){
-                    Double des1 = (double)(x-initXP2);
-                    Double des2 = (double) (y-initYP2);
-                    p2.updateCoord(des1,des2);
-                    initXP2 = event.getX();
-                    initYP2 = event.getY();
-                    System.out.println("Moviendose j2");
+                if(p1Active || p2Active){
+                    for (int i = 0; i< pointerCount; i++){
+                        float xB = event.getX(i);
+                        float yb = event.getY(i);
+
+                        if(xB< 300){
+                            Double des1 = (double)(xB-initXP1);
+                            Double des2 = (double) (yb-initYP1);
+                            p1.updateCoord(des1,des2);
+                            initYP1 = yb;
+                        }else if(xB > 300){
+                            Double des1 = (double)(xB-initXP2);
+                            Double des2 = (double) (yb-initYP2);
+                            p2.updateCoord(des1,des2);
+                            initYP2 = yb;
+                        }
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 p1Active= false;
                 p2Active=false;
                 break;
-        }*/
-        return super.onTouchEvent(event);
+       }
+        return true;
     }
 
     @Override
