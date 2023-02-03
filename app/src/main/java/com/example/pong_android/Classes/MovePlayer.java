@@ -34,7 +34,8 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     private Boolean p1Active=false, p2Active=false;
     private Ball ball;
     private TextTimer contador, puntuacionP1,puntuacionP2;
-    private  TimerThread timerThread;
+    private TimerThread timerThread;
+    private MediaPlayer jump;
     //foto bacGround
     private  Bitmap scaled;
 
@@ -44,7 +45,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         setBackgroundColor(Color.BLACK);
 
         //Musiquita to wapa
-        MediaPlayer jump = MediaPlayer.create(context,R.raw.pong_soundtrack);
+        jump = MediaPlayer.create(context,R.raw.floral_fury);
         jump.start();
     }
 
@@ -154,8 +155,6 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         //hilo de la pelota
         ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2);
         ballThread.start();
-
-
     }
 
     @Override

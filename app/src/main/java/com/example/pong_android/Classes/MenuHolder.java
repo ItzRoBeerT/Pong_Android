@@ -26,7 +26,6 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
     private Herramientas tools;
     private MediaPlayer jump;
 
-
     public MenuHolder(Context context, AppCompatActivity compAct) {
         super(context);
         getHolder().addCallback(this);
