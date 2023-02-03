@@ -43,5 +43,12 @@ public class TextTimer {
         canvas.drawText(this.txt,this.x,this.y,p);
     }
 
+    public  boolean isTouching(float x,float y){
+        if(x > this.x  && y > this.y){
+            return true;
+        }else
+            return false;
+    }
+
 
 }
