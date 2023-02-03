@@ -39,6 +39,8 @@ public class Ball extends Figure {
         canvas.drawCircle(getPosX().floatValue(),getPosY().floatValue(),getRadio().floatValue(),p);
     }
 
+
+
     @Override
     public boolean isTouching(Double x, Double y) {
         Integer disX = (int) (x-getPosX());
@@ -54,6 +56,13 @@ public class Ball extends Figure {
     public void updateCoord(Double desx, Double desy) {
         setPosX(desx + getPosX());
         setPosY(desy + getPosY());
+    }
+
+    public  void speedUpdate(int speed){
+        if(this.speedX<0){
+            this.speedX = -speed;
+        }else
+        this.speedX = speed;
     }
 
     public void slide(){

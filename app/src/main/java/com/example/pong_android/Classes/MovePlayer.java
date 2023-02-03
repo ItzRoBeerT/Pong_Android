@@ -137,7 +137,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         drawThread.start();
 
         //hilo cronometro
-        timerThread = new TimerThread(contador);
+        timerThread = new TimerThread(contador,ball);
         timerThread.start();
         //pintar backGround
         Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
