@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import com.example.pong_android.Figuras.Ball;
 import com.example.pong_android.Figuras.Paddle;
 import com.example.pong_android.Figuras.TextTimer;
+import com.example.pong_android.MainActivity;
 import com.example.pong_android.R;
 
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         getHolder().addCallback(this);
         setBackgroundColor(Color.BLACK);
+
+        //Musiquita to wapa
+        MediaPlayer jump = MediaPlayer.create(context,R.raw.pong_soundtrack);
+        jump.start();
     }
 
     @Override
@@ -148,6 +154,8 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         //hilo de la pelota
         ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2);
         ballThread.start();
+
+
     }
 
     @Override
