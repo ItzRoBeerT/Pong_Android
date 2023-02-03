@@ -1,5 +1,7 @@
 package com.example.pong_android.Classes;
 
+import android.graphics.Color;
+
 import com.example.pong_android.Figuras.TextTimer;
 
 public class TimerThread extends Thread {
@@ -20,7 +22,7 @@ public class TimerThread extends Thread {
     public void run() {
         super.run();
 
-        String min="", seg="";
+        String min="", seg="", texto="";
         try{
             while (!stop){
                 Thread.sleep(4);
@@ -37,8 +39,12 @@ public class TimerThread extends Thread {
                 else min = minutos.toString();
                 if( segundos < 10 ) seg = "0" + segundos;
                 else seg = segundos.toString();
+                texto= min+":"+seg;
 
-                txt.setTxt(min+":"+seg);
+                if(texto.equals("01:00")){
+                    txt.setColor(Color.YELLOW);
+                }
+                txt.setTxt(texto);
             }
         }catch (Exception e){
             txt.setTxt("00:00");
