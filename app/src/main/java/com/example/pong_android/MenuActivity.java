@@ -18,4 +18,6 @@ public class MenuActivity extends AppCompatActivity {
         MenuHolder menu = new MenuHolder(this,this);
         setContentView(menu);
     }
+
+
 }

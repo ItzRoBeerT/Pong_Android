@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pong_android.CreditsActivity;
 import com.example.pong_android.Figuras.Paddle;
 import com.example.pong_android.Figuras.TextTimer;
 import com.example.pong_android.MainActivity;
@@ -22,9 +23,10 @@ import com.example.pong_android.Services.Herramientas;
 
 public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
     private  Bitmap scaled;
-    private Paddle txtNewGame;
+    private Paddle txtNewGame, exit;
     private Herramientas tools;
     private MediaPlayer jump;
+    private  AppCompatActivity comAct;
 
     public MenuHolder(Context context, AppCompatActivity compAct) {
         super(context);
@@ -35,12 +37,15 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
         jump.start();
         jump.setLooping(true);
         tools = new Herramientas(compAct);
+        this.comAct = compAct;
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(scaled,0,0,null);
         txtNewGame.draw(canvas);
+        exit.draw(canvas);
     }
 
     @Override
@@ -52,6 +57,12 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
                 if (txtNewGame.isTouching((double) x, (double) y)){
                     jump.stop();
                    tools.cambiarActividad(MainActivity.class);
+                   comAct.finish();
+                }
+                if (exit.isTouching((double) x, (double) y)){
+                    jump.stop();
+                    comAct.finish();
+
                 }
                 break;
         }
@@ -69,6 +80,8 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
 
         //new game
         txtNewGame = new Paddle((double) getWidth()*0.35, (double) (getHeight()*0.36),700.0,100.0,Color.TRANSPARENT);
+        //exit
+        exit = new Paddle((double) (getWidth())*0.35, (double) (getHeight()*0.90),600.0,100.0,Color.TRANSPARENT);
 
     }
 

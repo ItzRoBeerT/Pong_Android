@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pong_android.Figuras.Ball;
 import com.example.pong_android.Figuras.Paddle;
@@ -34,12 +35,15 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     private Boolean p1Active=false, p2Active=false;
     private Ball ball;
     private TextTimer contador, puntuacionP1,puntuacionP2;
+    private Integer puntos1=0,puntos2=0;
+    private AppCompatActivity activity;
     private TimerThread timerThread;
     private MediaPlayer jump;
     //foto bacGround
     private  Bitmap scaled;
 
-    public MovePlayer(Context context) {
+
+    public MovePlayer(Context context, AppCompatActivity activity) {
         super(context);
         getHolder().addCallback(this);
         setBackgroundColor(Color.BLACK);
@@ -47,6 +51,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         //Musiquita to wapa
         jump = MediaPlayer.create(context,R.raw.floral_fury);
         jump.start();
+        this.activity= activity;
     }
 
     @Override
@@ -153,9 +158,12 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         puntuacionP2 = new TextTimer("0",(getWidth()-850),100);
 
         //hilo de la pelota
-        ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2);
+        ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2,activity);
         ballThread.start();
+
+
     }
+
 
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {

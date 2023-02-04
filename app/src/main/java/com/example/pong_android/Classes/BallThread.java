@@ -1,11 +1,19 @@
 package com.example.pong_android.Classes;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.view.SurfaceHolder;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pong_android.Figuras.Ball;
 import com.example.pong_android.Figuras.Paddle;
 import com.example.pong_android.Figuras.TextTimer;
+import com.example.pong_android.MainActivity;
+import com.example.pong_android.MenuActivity;
+import com.example.pong_android.R;
+import com.example.pong_android.Services.Herramientas;
 
 public class BallThread extends Thread{
 
@@ -15,8 +23,10 @@ public class BallThread extends Thread{
     private  Paddle p1, p2;
     private TextTimer puntuacionp1, puntuacionp2;
     private Integer cont1,cont2;
+    private AppCompatActivity activity;
+    private Herramientas tools;
 
-    public BallThread(Ball ball, MovePlayer move, Paddle p1, Paddle p2, TextTimer puntuacionp1, TextTimer puntuacionp2){
+    public BallThread(Ball ball, MovePlayer move, Paddle p1, Paddle p2, TextTimer puntuacionp1, TextTimer puntuacionp2, AppCompatActivity activity){
         this.ball= ball;
         this.move = move;
         this.p1 = p1;
@@ -25,7 +35,10 @@ public class BallThread extends Thread{
         this.cont2=0;
         this.puntuacionp1= puntuacionp1;
         this.puntuacionp2 = puntuacionp2;
+        this.activity=activity;
+        tools = new Herramientas(activity);
     }
+
 
     public void stopBall(){
         this.stop=false;
@@ -75,6 +88,12 @@ public class BallThread extends Thread{
                     sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+                if (cont1 == 2){
+                    System.out.println("Ha ganado j1");
+                    //tools.cambiarActividad(MenuActivity.class);
+                } else if(cont2==5){
+                    System.out.println("Ha ganado j2");
                 }
             }
 
