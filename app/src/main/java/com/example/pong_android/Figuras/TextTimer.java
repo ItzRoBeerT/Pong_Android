@@ -21,6 +21,10 @@ public class TextTimer {
         this.txt = txt;
     }
 
+    public String getTxt() {
+        return txt;
+    }
+
     public void setColor(int color) {
         this.color = color;
     }

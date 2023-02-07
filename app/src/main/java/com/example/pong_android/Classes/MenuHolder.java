@@ -20,12 +20,13 @@ import com.example.pong_android.Figuras.TextTimer;
 import com.example.pong_android.MainActivity;
 import com.example.pong_android.OptionsActivity;
 import com.example.pong_android.R;
+import com.example.pong_android.ScoreActivity;
 import com.example.pong_android.Services.Herramientas;
 
 public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
     private  Bitmap scaled;
     private Integer colorBate;
-    private Paddle txtNewGame, exit, options;
+    private Paddle txtNewGame, exit, options, score;
     private Herramientas tools;
     private MediaPlayer jump;
     private  AppCompatActivity comAct;
@@ -48,6 +49,7 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
         txtNewGame.draw(canvas);
         exit.draw(canvas);
         options.draw(canvas);
+        score.draw(canvas);
     }
 
     @Override
@@ -71,6 +73,11 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
                     comAct.finish();
                     tools.cambiarActividad(OptionsActivity.class);
                 }
+                if (score.isTouching((double) x, (double) y)){
+                    jump.stop();
+                    comAct.finish();
+                    tools.cambiarActividad(ScoreActivity.class);
+                }
                 break;
         }
         return true;
@@ -91,6 +98,8 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
         exit = new Paddle((double) (getWidth())*0.35, (double) (getHeight()*0.90),600.0,100.0,Color.TRANSPARENT);
         //options
         options = new Paddle((double) (getWidth())*0.35, (double) (getHeight()/2),700.0,100.0,Color.TRANSPARENT);
+        //score
+        score = new Paddle((double) (getWidth())*0.35, (double) (getHeight()*0.6),700.0,100.0,Color.TRANSPARENT);
 
 
 

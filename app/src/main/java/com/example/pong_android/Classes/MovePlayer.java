@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pong_android.DAO.DaoHistorial;
 import com.example.pong_android.Figuras.Ball;
 import com.example.pong_android.Figuras.Paddle;
 import com.example.pong_android.Figuras.TextTimer;
@@ -50,6 +51,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     private Canvas miCanvas;
     private int contadorActividad = 0;
     private Bitmap bmpKnock;
+    private DaoHistorial dao;
 
     public MovePlayer(Context context, AppCompatActivity activity) {
         super(context);
@@ -63,7 +65,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         this.activity= activity;
         tools = new Herramientas(activity);
 
-
+        dao = new DaoHistorial(context);
     }
 
     @Override
@@ -207,10 +209,17 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
                 drawThread.setRunning(false);
                 ballThread.setStop(false);
                 timerThread.setStop(true);
+                if (contadorActividad==0) {
+                    dao.insertarPartida("P1","P2","P1",contador.getTxt());
+                }
+
             }else if(this.puntos2==MAX_GOL){
                 drawThread.setRunning(false);
                 ballThread.setStop(false);
                 timerThread.setStop(true);
+                if (contadorActividad==0) {
+                    dao.insertarPartida("P1","P2","P2",contador.getTxt());
+                }
             }
             if (contadorActividad==0) {
                 tools.cambiarActividad(MenuActivity.class);
