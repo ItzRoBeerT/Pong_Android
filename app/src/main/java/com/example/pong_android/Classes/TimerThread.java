@@ -1,6 +1,7 @@
 package com.example.pong_android.Classes;
 
 import android.graphics.Color;
+import android.view.SurfaceView;
 
 import com.example.pong_android.Figuras.Ball;
 import com.example.pong_android.Figuras.TextTimer;
@@ -12,13 +13,19 @@ public class TimerThread extends Thread {
     private Integer minutos,segundos,milesimas;
     private  TextTimer txt;
     private Ball ball;
+    private  MovePlayer surface;
 
-    public TimerThread(TextTimer txt, Ball ball){
+    public TimerThread(TextTimer txt, Ball ball,MovePlayer surface){
         this.minutos=0;
         this.segundos=0;
         this.milesimas=0;
         this.txt = txt;
         this.ball= ball;
+        this.surface=surface;
+    }
+
+    public void setStop(Boolean stop) {
+        this.stop = stop;
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.text.Editable;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,12 +23,17 @@ import com.example.pong_android.Figuras.Ball;
 import com.example.pong_android.Figuras.Paddle;
 import com.example.pong_android.Figuras.TextTimer;
 import com.example.pong_android.MainActivity;
+import com.example.pong_android.MenuActivity;
 import com.example.pong_android.R;
+import com.example.pong_android.Services.Herramientas;
 
 import java.util.ArrayList;
 
 public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
 
+    private  final  Integer MAX_GOL=5;
+    private Herramientas tools;
+    private  Integer colorBate;
     private DrawThread drawThread;
     private BallThread ballThread;
     private Paddle p1,p2;
@@ -38,10 +44,12 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     private Integer puntos1=0,puntos2=0;
     private AppCompatActivity activity;
     private TimerThread timerThread;
-    private MediaPlayer jump;
+    private MediaPlayer jump, knockaut;
     //foto bacGround
-    private  Bitmap scaled;
-
+    private  Bitmap scaled, scaled2;
+    private Canvas miCanvas;
+    private int contadorActividad = 0;
+    private Bitmap bmpKnock;
 
     public MovePlayer(Context context, AppCompatActivity activity) {
         super(context);
@@ -51,7 +59,11 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         //Musiquita to wapa
         jump = MediaPlayer.create(context,R.raw.floral_fury);
         jump.start();
+        knockaut = MediaPlayer.create(context,R.raw.knockout);
         this.activity= activity;
+        tools = new Herramientas(activity);
+
+
     }
 
     @Override
@@ -107,6 +119,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        miCanvas= canvas;
         //dibujar fondo
         canvas.drawBitmap(scaled,0,0,null);
 
@@ -118,20 +131,29 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         contador.draw(canvas);
         puntuacionP1.draw(canvas);
         puntuacionP2.draw(canvas);
+
+
+        canvas.drawBitmap(scaled2, 1000, 1000,null);
+        terminar();
+
+    }
+
+    public void dibujar(Paddle p){
+        p.draw(this.miCanvas);
     }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-
+        colorBate = tools.recogerValor();
         Integer midX = this.getWidth()/2;
         Integer midY = this.getHeight()/2;
         //Inicializar posicion inicial de los bates
         initYP1=(float)(this.getHeight()/2);
         initYP2=(float)(this.getHeight()/2);
         //Jugador 1
-        p1 = new Paddle(200.0,midY.doubleValue(),50.0,200.0,Color.WHITE);
+        p1 = new Paddle(150.0,midY.doubleValue(),50.0,200.0,colorBate);
         //Jugador 2
-        p2 = new Paddle((double)(this.getWidth()-200),midY.doubleValue(),50.0,200.0,Color.WHITE);
+        p2 = new Paddle((double)(this.getWidth()-200),midY.doubleValue(),50.0,200.0,colorBate);
         //Pelota
         ball = new Ball((double)midX,(double)midY,50.0,Color.WHITE);
         //contador
@@ -143,7 +165,7 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         drawThread.start();
 
         //hilo cronometro
-        timerThread = new TimerThread(contador,ball);
+        timerThread = new TimerThread(contador,ball,this);
         timerThread.start();
         //pintar backGround
         Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
@@ -152,22 +174,50 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
         int newHeight = Math.round(background.getHeight() / scale);
         scaled = Bitmap.createScaledBitmap(background,newWidth,newHeight,true);
 
+        bmpKnock = BitmapFactory.decodeResource(getResources(), R.drawable.foto_ganar);
+        scaled2 = Bitmap.createScaledBitmap(bmpKnock,newWidth,newHeight,true);
+
         //pintar puntuacion p1
         puntuacionP1 = new TextTimer("0",getWidth()/3,100);
         //pintar puntuacion p2
         puntuacionP2 = new TextTimer("0",(getWidth()-850),100);
 
         //hilo de la pelota
-        ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2,activity);
+        ballThread = new BallThread(ball,this, p1,p2,puntuacionP1,puntuacionP2);
         ballThread.start();
 
-
     }
-
 
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
+    }
+
+    public void terminar(){
+
+
+        puntos1 = ballThread.getPuntos1();
+        puntos2 = ballThread.getPuntos2();
+
+        if(puntos1 == MAX_GOL || puntos2 == MAX_GOL ){
+            miCanvas.drawBitmap(scaled2, 0, 0,null);
+            jump.stop();
+            knockaut.start();
+            if(this.puntos1==MAX_GOL){
+                drawThread.setRunning(false);
+                ballThread.setStop(false);
+                timerThread.setStop(true);
+            }else if(this.puntos2==MAX_GOL){
+                drawThread.setRunning(false);
+                ballThread.setStop(false);
+                timerThread.setStop(true);
+            }
+            if (contadorActividad==0) {
+                tools.cambiarActividad(MenuActivity.class);
+            }
+            contadorActividad++;
+            this.activity.finish();
+        }
     }
 
     @Override
@@ -182,4 +232,5 @@ public class MovePlayer extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
+
 }

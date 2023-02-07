@@ -26,7 +26,7 @@ public class BallThread extends Thread{
     private AppCompatActivity activity;
     private Herramientas tools;
 
-    public BallThread(Ball ball, MovePlayer move, Paddle p1, Paddle p2, TextTimer puntuacionp1, TextTimer puntuacionp2, AppCompatActivity activity){
+    public BallThread(Ball ball, MovePlayer move, Paddle p1, Paddle p2, TextTimer puntuacionp1, TextTimer puntuacionp2){
         this.ball= ball;
         this.move = move;
         this.p1 = p1;
@@ -39,7 +39,17 @@ public class BallThread extends Thread{
         tools = new Herramientas(activity);
     }
 
+    public void setStop(Boolean stop) {
+        this.stop = stop;
+    }
 
+    public int getPuntos1(){
+        return  cont1;
+    }
+
+    public int getPuntos2(){
+        return  cont2;
+    }
     public void stopBall(){
         this.stop=false;
     }
@@ -53,7 +63,7 @@ public class BallThread extends Thread{
             while (stop){
                 ball.slide();
                 //MOVIMIENTO DE LA PELOTA CUANDO TOCA LOS BORDES
-                if( ball.getPosX() > width){
+                if( ball.getPosX() > width-100){
                     ball.touchBorder();
                     cont1++;
                     puntuacionp1.setTxt(cont1.toString());
@@ -61,7 +71,7 @@ public class BallThread extends Thread{
                     ball.setPosY((double) (move.getHeight()/2));
                     Thread.sleep(1000);
                 }
-                if(ball.getPosX() < 0){
+                if(ball.getPosX() < 100){
                     ball.touchBorder();
                     cont2++;
                     puntuacionp2.setTxt(cont2.toString());
@@ -89,14 +99,7 @@ public class BallThread extends Thread{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (cont1 == 2){
-                    System.out.println("Ha ganado j1");
-                    //tools.cambiarActividad(MenuActivity.class);
-                } else if(cont2==5){
-                    System.out.println("Ha ganado j2");
-                }
             }
-
         }catch (Exception e){
 
         }

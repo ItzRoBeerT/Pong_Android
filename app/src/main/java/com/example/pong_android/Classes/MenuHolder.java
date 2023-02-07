@@ -18,24 +18,25 @@ import com.example.pong_android.CreditsActivity;
 import com.example.pong_android.Figuras.Paddle;
 import com.example.pong_android.Figuras.TextTimer;
 import com.example.pong_android.MainActivity;
+import com.example.pong_android.OptionsActivity;
 import com.example.pong_android.R;
 import com.example.pong_android.Services.Herramientas;
 
 public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
     private  Bitmap scaled;
-    private Paddle txtNewGame, exit;
+    private Integer colorBate;
+    private Paddle txtNewGame, exit, options;
     private Herramientas tools;
     private MediaPlayer jump;
     private  AppCompatActivity comAct;
 
-    public MenuHolder(Context context, AppCompatActivity compAct) {
+    public MenuHolder(Context context, AppCompatActivity compAct, int colorBate) {
         super(context);
         getHolder().addCallback(this);
         setBackgroundColor(Color.BLACK);
+        this.colorBate= colorBate;
 
         jump = MediaPlayer.create(context,R.raw.menu_theme);
-        jump.start();
-        jump.setLooping(true);
         tools = new Herramientas(compAct);
         this.comAct = compAct;
 
@@ -46,6 +47,7 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(scaled,0,0,null);
         txtNewGame.draw(canvas);
         exit.draw(canvas);
+        options.draw(canvas);
     }
 
     @Override
@@ -56,13 +58,18 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_DOWN:
                 if (txtNewGame.isTouching((double) x, (double) y)){
                     jump.stop();
-                   tools.cambiarActividad(MainActivity.class);
-                   comAct.finish();
+                    comAct.finish();
+                   tools.pasarValor(MainActivity.class,colorBate);
+
                 }
                 if (exit.isTouching((double) x, (double) y)){
                     jump.stop();
                     comAct.finish();
-
+                }
+                if (options.isTouching((double) x, (double) y)){
+                    jump.stop();
+                    comAct.finish();
+                    tools.cambiarActividad(OptionsActivity.class);
                 }
                 break;
         }
@@ -82,7 +89,13 @@ public class MenuHolder extends SurfaceView implements SurfaceHolder.Callback {
         txtNewGame = new Paddle((double) getWidth()*0.35, (double) (getHeight()*0.36),700.0,100.0,Color.TRANSPARENT);
         //exit
         exit = new Paddle((double) (getWidth())*0.35, (double) (getHeight()*0.90),600.0,100.0,Color.TRANSPARENT);
+        //options
+        options = new Paddle((double) (getWidth())*0.35, (double) (getHeight()/2),700.0,100.0,Color.TRANSPARENT);
 
+
+
+        jump.start();
+        jump.setLooping(true);
     }
 
     @Override

@@ -10,12 +10,14 @@ import com.example.pong_android.Services.Herramientas;
 public class MenuActivity extends AppCompatActivity {
 
     Herramientas tools = new Herramientas(this);
-
+    private  static int color;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tools.quitarTitulo();
-        MenuHolder menu = new MenuHolder(this,this);
+        color= tools.recogerValor();
+        MenuHolder menu = new MenuHolder(this,this,color);
+
         setContentView(menu);
     }
 
