@@ -19,6 +19,7 @@ public class OptionsActivity extends AppCompatActivity {
         tools.quitarTitulo();
         setContentView(R.layout.activity_options);
 
+
         Button btnDefault = findViewById(R.id.btnDefault);
         btnDefault.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,5 +40,29 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
+        Button btnAma = findViewById(R.id.btnAmarillo);
+        btnAma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorBate = Color.YELLOW;
+                tools.pasarValor(MenuActivity.class,colorBate);
+                finish();
+            }
+        });
+        Button btnAzul = findViewById(R.id.btnAzul);
+        btnAzul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorBate = Color.BLUE;
+                tools.pasarValor(MenuActivity.class,colorBate);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        tools.cambiarActividad(MenuActivity.class);
     }
 }

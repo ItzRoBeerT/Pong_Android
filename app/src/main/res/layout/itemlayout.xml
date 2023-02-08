@@ -2,38 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#000000">
 
     <TextView
         android:id="@+id/txtP1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
-        android:text="jugador1" />
+        android:text="jugador1"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/txtP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
-        android:text="jugador2" />
+        android:text="jugador2"
+        android:textColor="#F4F4F4" />
 
     <TextView
         android:id="@+id/txtGanador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
-        android:text="ganador" />
+        android:shadowColor="#FBFBFB"
+        android:text="ganador"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/alfa_slab_one"
         android:gravity="center"
-        android:text="tiempo" />
+        android:text="tiempo"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

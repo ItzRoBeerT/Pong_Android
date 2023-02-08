@@ -51,12 +51,31 @@ public class TimerThread extends Thread {
                 else seg = segundos.toString();
                 texto= min+":"+seg;
 
-                if(texto.equals("00:30")){
+                if(texto.equals("00:15")){
                     this.ball.speedUpdate(15);
+                }
+                if(texto.equals("00:30")){
+                    this.ball.speedUpdate(20);
+                }
+                if(texto.equals("00:45")){
+                    this.ball.speedUpdate(25);
                 }
                 if(texto.equals("01:00")){
                     txt.setColor(Color.YELLOW);
-                    this.ball.speedUpdate(25);
+                    this.ball.speedUpdate(30);
+                }
+                if(texto.equals("01:15")){
+                    this.ball.speedUpdate(32);
+                }
+                if(texto.equals("01:30")){
+                    this.ball.speedUpdate(35);
+                }
+                if(texto.equals("01:45")){
+                    this.ball.speedUpdate(36);
+                }
+                if(texto.equals("02:00")){
+                    txt.setColor(Color.RED);
+                    this.ball.speedUpdate(40);
                 }
                 txt.setTxt(texto);
             }

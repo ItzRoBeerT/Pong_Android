@@ -4,41 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".OptionsActivity">
+
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="291dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="312dp"
+        android:layout_marginStart="259dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="259dp"
+        android:layout_marginBottom="21dp"
+        android:fontFamily="@font/alfa_slab_one"
         android:text="Colores de los bates"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnDefault"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+
         android:id="@+id/btnDefault"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="318dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="319dp"
+        android:backgroundTint="#F8F8F8"
         android:text="Default"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:strokeColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btnRojo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="317dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="326dp"
+        android:layout_width="101dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="314dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="316dp"
+        android:backgroundTint="#FF0000"
         android:text="Rojo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDefault" />
+
+    <Button
+        android:id="@+id/btnAmarillo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="310dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="311dp"
+        android:backgroundTint="#FFC107"
+        android:text="Amarillo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRojo" />
+
+    <Button
+        android:id="@+id/btnAzul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="318dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="325dp"
+        android:backgroundTint="#03A9F4"
+        android:text="Azul"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAmarillo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
